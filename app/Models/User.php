@@ -52,7 +52,7 @@ class User extends Authenticatable
     protected function description(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => explode(',', $value),
+            get: fn ($value) => empty($value)? [] : explode(',', $value),
             set: fn ($value) => implode(',', $value),
         );
     }
