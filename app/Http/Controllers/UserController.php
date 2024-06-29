@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use App\Http\Resources\UsersResource;
 use App\Models\User;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserController extends Controller
 {
-    public function __invoke(): JsonResponse
+    public function __invoke(): JsonResource
     {
-        return response()->json(User::all());
+        return UsersResource::collection(User::all());
     }
 }
