@@ -22,13 +22,12 @@
 
 * На гитхабе создать репозиторий и в файле Readme.md описать процесс деплоя сделанного приложения на компьютере, чтобы я мог его задеплоить
 
-
 ## Установка
 
 ### Требования
 
-- Тестировалось на Linux и Windows
-- Работающий docker с docker compose
+- Тестировалось на Ubuntu 24.04 и Windows 10 с установленной и настроенной WSL 2
+- Работающий docker, проверка (docker run hello-world)
 
 ### Команды процесса установки
 
@@ -58,7 +57,7 @@ LOG_STACK=single
 LOG_DEPRECATIONS_CHANNEL=null
 LOG_LEVEL=debug
 DB_CONNECTION=sqlite
-DB_DATABASE=./database/database.sqlite
+DB_DATABASE="/var/www/html/database/database.sqlite"
 DB_FOREIGN_KEYS=false
 
 SESSION_DRIVER=database
@@ -88,6 +87,13 @@ docker run --rm     -u "$(id -u):$(id -g)"     -v "$(pwd):/var/www/html" \
 ```
 ./vendor/bin/sail up -d
 ./vendor/bin/sail artisan migrate --force
-../vendor/bin/sail artisan db:seed
+./vendor/bin/sail artisan db:seed UserSeeder
 ```
+5. Тестирование
+
+Запуск тестирования проверяет в том числе и возвращаемый через эндпроинт ```/users``` не пустые поля ```description``` у пользователей 
+```bash
+./vendor/bin/sail test
+```
+
 
