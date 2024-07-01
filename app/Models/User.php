@@ -2,15 +2,14 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use DateTimeInterface;
+use App\DescriptionInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
-class User extends Authenticatable
+class User extends Authenticatable implements DescriptionInterface
 {
     use HasFactory, Notifiable;
 
@@ -56,4 +55,10 @@ class User extends Authenticatable
             set: fn ($value) => implode(',', $value),
         );
     }
+
+    public function getDescription(): array
+    {
+        return $this->description;
+    }
+
 }

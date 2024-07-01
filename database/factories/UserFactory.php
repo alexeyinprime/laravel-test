@@ -30,8 +30,8 @@ class UserFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
             'description' => fake()->randomElements([
-                'php','js','go','css','html','mysql','php5','php4','java','pgsql','sql','htmlx'
-            ], rand(0, 10), false),
+                'php','js','go','css',
+            ], rand(0, 4), false),
         ];
     }
 

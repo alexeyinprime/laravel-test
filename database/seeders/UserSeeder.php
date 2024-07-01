@@ -15,5 +15,12 @@ class UserSeeder extends Seeder
     {
         // create ten users
         User::factory()->count(10)->create();
+        User::factory()->create([
+            'name' => 'Junior',
+            'email' => 'junior@laravel.com',
+            'password' => \Illuminate\Support\Facades\Hash::make('123456'),
+            'email_verified_at' => now(),
+            'description' => []
+        ]);
     }
 }
