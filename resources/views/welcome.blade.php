@@ -20,7 +20,6 @@
         }
         #app[v-cloak] {
             opacity: 0;
-            /* display: none */
         }
         [data-idx]::before {
             content: attr(data-idx)".\00a0"
@@ -47,26 +46,26 @@
                 <div class="card-body">
                     <form class="form">
                         <label id="inputUsernameHelp" for="validateUsername" class="form-label"
-                               v-text="placeholderText"
+                            v-text="placeholderText"
                         ></label>
                         <div class="input-group has-validation">
                             <input type="text" class="form-control text-light" aria-describedby="inputUsernameHelp" id="validateUsername"
-                                   v-model="inputValue"
-                                   :class="{'is-invalid': invalidName}"
-                                   :placeholder="placeholderText"
-                                   @keypress.enter="addUser"
+                                v-model="inputValue"
+                                :class="{'is-invalid': invalidName}"
+                                :placeholder="placeholderText"
+                                @keypress.enter="addUser"
                             />
                             <div id="validateUsernameFeedback" class="invalid-feedback">
-                                Неверное имя пользователя
+                                <span>Неверное имя пользователя</span>
                             </div>
                         </div>
                         <hr/>
                         <label id="selectSkillsHelp" for="selectSkills" class="form-label"
-                               v-text="selectLabelText"
+                            v-text="selectLabelText"
                         ></label>
                         <div class="input-group">
                             <select class="form-select form-select-sm" id="selectSkills" multiple aria-describedby="selectSkillsHelp"
-                                    v-model="selectedSkills"
+                                v-model="selectedSkills"
                             >
                                 <option value="php">php</option>
                                 <option value="js">js</option>
@@ -76,8 +75,8 @@
                         </div>
                         <hr/>
                         <button class="btn btn-success rounded-pill" type="submit"
-                                :disabled="invalidName"
-                                @click.prevent="addUser"
+                            :disabled="invalidName"
+                            @click.prevent="addUser"
                         >Добавить</button>
                     </form>
                 </div>
@@ -98,13 +97,12 @@
                         >
                             <span class="me-auto">{{ user.name }}</span>
                             <span class="badge text-bg-success rounded-pill me-3"
-                                  v-for="skill in user.description"
+                                v-for="skill in user.description"
                             >
-                  {{ skill }}
-                </span>
-                            <!-- <input type="text" @click.stop> -->
+                                {{ skill }}
+                            </span>
                             <button class="btn btn-sm btn-danger rounded-pill end-0"
-                                    @click="removeUser(idx)"
+                                @click="removeUser(idx)"
                             >Удалить</button>
                         </li>
                     </ul>
@@ -120,7 +118,6 @@
 <script>
     Vue.createApp({
         data: () => ({
-            counter: 0,
             titleText: 'Пользователи',
             subtitleFormText: 'Новый пользователь',
             subtitleListText: 'Список пользователей',
@@ -154,7 +151,7 @@
                         description: this.selectedSkills
                     }
                     this.users.push(u)
-                    fetch('https://jsonplaceholder.typicode.com/users', {
+                    fetch('/users', {
                         method: 'POST',
                         body: JSON.stringify(u),
                         headers: {
@@ -163,14 +160,13 @@
                     })
                         .then((response) => response.json())
                         .then((json) => console.log(json))
-
                     this.selectedSkills = []
                     this.inputValue = ''
                 }
             },
             removeUser(idx) {
                 this.users.splice(idx, 1)
-                fetch('https://jsonplaceholder.typicode.com/users/'+idx, {
+                fetch('/users?index='+idx, {
                     method: 'DELETE',
                 }).then(response => console.log(response.ok))
             }
